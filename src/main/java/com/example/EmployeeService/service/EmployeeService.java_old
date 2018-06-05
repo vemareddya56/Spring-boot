@@ -1,0 +1,99 @@
+package com.example.EmployeeService.service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import com.example.EmployeeService.model.Employee;
+
+//@Service
+public class EmployeeService_old {
+
+	private static int counter = 0;
+
+	private static Map<String, Employee> empList = new HashMap<String, Employee>();
+
+	public List<Employee> getEmployeeList() {
+
+		List<Employee> employees = new ArrayList<Employee>();
+
+		for (Employee emp : empList.values())
+			employees.add(emp);
+
+		return employees;
+	}
+
+	public Employee getEmployee(String empid) {
+
+		return empList.get(empid);
+
+	}
+
+	public void addEmployee(Employee e) {
+
+		empList.put(e.getEmpId(), e);
+	}
+
+	//@Scheduled(cron = "0/10 * * * * ?")
+	public void addEmployByScheduler() {
+		System.out.println(new Date().toString() + "Triggered addEmployByScheduler :start");
+		Employee e = new Employee();
+
+		int i = counter++;
+		e.setEmpId(String.valueOf(i));
+		e.setName("Emp" + String.valueOf(i));
+		e.setDesignation("Developer");
+		e.setSalary(2500);
+
+		empList.put(e.getEmpId(), e);
+		System.out.println(new Date().toString() + "Triggered addEmployByScheduler : " + empList.size() + " : ending");
+	}
+
+	//@Scheduled(fixedRate = 1000)
+	public void addEmployByfixedRate() {
+		System.out.println(new Date().toString() + "Triggered addEmployByfixedRate : Starting");
+		Employee e = new Employee();
+
+		int i = counter++;
+		e.setEmpId(String.valueOf(i));
+		e.setName("Emp" + String.valueOf(i));
+		e.setDesignation("Developer");
+		e.setSalary(2500);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		empList.put(e.getEmpId(), e);
+		System.out.println(new Date().toString() + "Triggered addEmployByfixedRate : " + empList.size() + " :Ending");
+	}
+
+	//@Scheduled(fixedDelay = 2000)
+	public void addEmployByfixedDelay() {
+		System.out.println(new Date().toString() + "Triggered addEmployByfixedDelay: Starting");
+		Employee e = new Employee();
+
+		int i = counter++;
+		e.setEmpId(String.valueOf(i));
+		e.setName("Emp" + String.valueOf(i));
+		e.setDesignation("Developer");
+		e.setSalary(2500);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		empList.put(e.getEmpId(), e);
+		System.out.println(new Date().toString() + "Triggered addEmployByfixedDelay : " + empList.size() + " :Ending");
+	}
+
+}
